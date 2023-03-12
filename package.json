@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha 'test/**/*.js' --recursive --reporter mocha-junit-reporter --timeout 60000 --exit"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "mongodb": "^5.1.0"
   },
   "devDependencies": {
+    "mocha-junit-reporter": "^2.2.0",
     "webpack": "^5.76.1",
     "webpack-cli": "^5.0.1"
   }
