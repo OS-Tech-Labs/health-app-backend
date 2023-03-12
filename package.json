@@ -21,6 +21,7 @@
     "mongodb": "^5.1.0"
   },
   "devDependencies": {
+    "webpack": "^5.76.1",
     "webpack-cli": "^5.0.1"
   }
 }
