@@ -19,5 +19,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "mongodb": "^5.1.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.0.1"
   }
 }
