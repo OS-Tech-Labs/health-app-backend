@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Omalya-Samith/EduAppBackend#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "mocha": "^10.2.0",
     "mongodb": "^5.1.0"
   },
   "devDependencies": {
