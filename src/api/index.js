@@ -1,22 +1,12 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import helmet from 'helmet'
-import morgan from 'morgan'
+import client from '../../db/pool.js'
 
-import LoginRoutes from './routes/Login'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 
-dotenv.config()
-const app = express()
-
-app.use(express.json())
-app.use(helmet())
-app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
-app.use(morgan('common'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extendded: false }))
-app.use(cors())
-
-/* ROUTES */
-app.use('/login', LoginRoutes)
+client.query('SELECT t.* FROM public."User" t LIMIT 501', (err, res) => {
+  if (!err) {
+    console.log(res.rows)
+    console.log('hi')
+  } else {
+    console.log(err.message)
+  }
+})
