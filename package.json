@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Omalya-Samith/EduAppBackend#readme",
   "dependencies": {
+    "@prisma/client": "^4.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -27,7 +28,11 @@
     "mocha": "^10.2.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.10.0",
+    "postgres": "^3.3.4",
+    "prisma": "^4.11.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.54.1",
