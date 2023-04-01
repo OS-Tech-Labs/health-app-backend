@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "devstart": "nodemon --esm script.ts",
     "test": "mocha 'test/**/*.js' --recursive --reporter mocha-junit-reporter --timeout 60000 --exit",
     "start": "node src/api/"
   },
@@ -19,7 +20,13 @@
   },
   "homepage": "https://github.com/Omalya-Samith/EduAppBackend#readme",
   "dependencies": {
+<<<<<<< Updated upstream
     "@prisma/client": "^4.11.0",
+=======
+    "@prisma/client": "^4.12.0",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+>>>>>>> Stashed changes
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -29,12 +36,16 @@
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
     "morgan": "^1.10.0",
+    "node": "^19.8.1",
+    "nodemon": "^2.0.22",
     "pg": "^8.10.0",
     "postgres": "^3.3.4",
-    "prisma": "^4.11.0",
+    "prisma": "^4.12.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "eslint": "^8.36.0",
     "eslint-config-standard-with-typescript": "^34.0.0",
@@ -43,6 +54,8 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "mocha-junit-reporter": "^2.2.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.5",
     "webpack": "^5.76.1",
     "webpack-cli": "^5.0.1"
