@@ -5,13 +5,13 @@ const login = async (req, res) => {
   const password = req.body.password
 
   const hash = await getUserHash(username)
-
+  console.log(password, hash)
   if (!hash) {
     return res.send({ approved: false })
   }
 
   const match = await comparePassword(password, hash)
-
+  console.log(username, password, hash)
   if (match) {
     console.log('Login successful')
     return res.send({ approved: true })
