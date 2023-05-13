@@ -35,7 +35,3 @@ app.use(cookieParser())
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 // Route for index
 app.use('/user', UserRoute)
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
