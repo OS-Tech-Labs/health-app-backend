@@ -5,7 +5,7 @@ const login = async (req, res) => {
   const password = req.body.password
 
   const hash = await getUserHash(username)
-
+  console.log(password, hash)
   if (!hash) {
     return res.send({ approved: false })
   }
