@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,118 +7,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Patient {
-  id             String       @id @default(uuid())
-  user           User         @relation(fields: [userId], references: [id])
-  userId         String       @unique
-  first_name     String
-  last_name      String
-  email_address  String
-  contact_number String
-  age            Int
-  weight         Int
-  allergies      Json
-  description    String
-  Treatments     Treatments[]
-  Booking        Booking[]
-  Chat           Chat[]
-}
-
-model Treatments {
-  id        String  @id @default(uuid())
-  treatment Json
-  pateint   Patient @relation(fields: [patientId], references: [id])
-  patientId String
-}
-
-model Pharmacist {
-  id               String         @id @default(uuid())
-  medical_officer  MedicalOfficer @relation(fields: [medicalOfficerId], references: [id])
-  medicalOfficerId String         @unique
-  first_name       String
-  last_name        String
-  email_address    String
-  contact_number   String
-  pharmacy_drug    PharmacyDrug[]
-}
-
-model PharmacyDrug {
-  pharmacist   Pharmacist @relation(fields: [pharmacistId], references: [id])
-  pharmacistId String
-  medicine     Medicine   @relation(fields: [medicineId], references: [id])
-  medicineId   String
-
-  @@id([pharmacistId, medicineId])
+model Chat {
+  chat_id    String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  officer_id String?  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  patient_id String?  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  disabled   Boolean?
+  Patient    Patient? @relation(fields: [patient_id], references: [patient_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_Chat.patient_id")
 }
 
 model Doctor {
-  id               String           @id @default(uuid())
-  medical_officer  MedicalOfficer   @relation(fields: [medicalOfficerId], references: [id])
-  medicalOfficerId String           @unique
-  first_name       String
-  last_name        String
-  email_address    String
-  contact_number   String
-  specialization   String
-  Booking          Booking[]
-  DoctorTimetable  DoctorTimetable?
+  doctor_id       String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  officer_id      String?   @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  first_name      String?   @db.VarChar(20)
+  last_name       String?   @db.VarChar(20)
+  email_address   String?   @db.VarChar(50)
+  contact__number String?   @map("contact _number") @db.VarChar(20)
+  specialization  String?   @db.VarChar(20)
+  bookings        bookings?
 }
 
-model Booking {
-  id          String   @id @default(uuid())
-  patient     Patient  @relation(fields: [patientId], references: [id])
-  patientId   String
-  doctor      Doctor   @relation(fields: [doctorId], references: [id])
-  doctorId    String
-  description String?
-  date        DateTime
-}
+model Medical_Officer {
+  officer_id String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id    String? @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 
-model User {
-  id              String          @id @default(uuid())
-  hash            String
-  type            UserType
-  username        String          @unique
-  email_address   String          @unique
-  medical_officer MedicalOfficer?
-  Patient         Patient?
-}
-
-model MedicalOfficer {
-  id         String      @id @default(uuid())
-  user       User        @relation(fields: [userId], references: [id])
-  userId     String      @unique
-  Chat       Chat[]
-  Pharmacist Pharmacist?
-  Doctor     Doctor?
-}
-
-model Chat {
-  officer          MedicalOfficer @relation(fields: [medicalOfficerId], references: [id])
-  medicalOfficerId String
-  patient          Patient        @relation(fields: [patientId], references: [id])
-  patientId        String
-  disabled         Boolean
-
-  @@id([medicalOfficerId, patientId])
+  @@map("Medical Officer")
 }
 
 model Medicine {
-  id            String         @id @default(uuid())
-  name          String
-  pharmacy_drug PharmacyDrug[]
+  medicine_id   String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  medicine_name String?         @db.VarChar(20)
+  pharmacy_drug pharmacy_drug[] @ignore
 }
 
-model DoctorTimetable {
-  doctor     Doctor @relation(fields: [doctorId], references: [id])
-  doctorId   String @unique
-  weeklyPlan Json
+model Patient {
+  patient_id     String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user_id        String?      @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  first_name     String?      @db.VarChar(20)
+  last_name      String?      @db.VarChar(20)
+  email_address  String?      @db.VarChar(20)
+  contact_number String?      @db.VarChar(20)
+  age            Int?
+  weight         Int?
+  allergies      String?      @db.Xml
+  description    String?      @db.VarChar(50)
+  Chat           Chat[]
+  Treatments     Treatments[]
+  bookings       bookings[]
 }
 
-enum UserType {
-  GUEST
-  PATIENT
-  PHARMACIST
-  DOCTOR
-  ADMIN
+model Pharmacist {
+  pharmacist_id  String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  officer_id     String?         @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  first_name     String?         @db.VarChar(20)
+  last_name      String?         @db.VarChar(20)
+  email_address  String?         @db.VarChar(20)
+  contact_number String?         @db.VarChar(20)
+  pharmacy_drug  pharmacy_drug[] @ignore
+}
+
+model Treatments {
+  treatment_id String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  patient_id   String?  @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  treatment    String?  @db.Xml
+  Patient      Patient? @relation(fields: [patient_id], references: [patient_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_Treatments.patient_id")
+}
+
+model User {
+  user_id       String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  hash          String? @db.VarChar(50)
+  user_type     String? @db.VarChar(20)
+  username      String? @db.VarChar(30)
+  email_address String? @db.VarChar(30)
+}
+
+model bookings {
+  booking_id  String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  patient_id  String?   @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  doctor_id   String?   @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  description String?   @db.VarChar(50)
+  date        DateTime? @db.Timestamp(6)
+  Doctor      Doctor    @relation(fields: [booking_id], references: [doctor_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_bookings.booking_id")
+  Patient     Patient?  @relation(fields: [patient_id], references: [patient_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_bookings.patient_id")
+}
+
+model doctor_timetable {
+  doctor_id   String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  weekly_plan String? @db.Xml
+
+  @@map("doctor-timetable")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model pharmacy_drug {
+  pharmacist_id String?     @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  medicine_id   String?     @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  Medicine      Medicine?   @relation(fields: [medicine_id], references: [medicine_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_pharmacy-drug.medicine_id")
+  Pharmacist    Pharmacist? @relation(fields: [pharmacist_id], references: [pharmacist_id], onDelete: NoAction, onUpdate: NoAction, map: "FK_pharmacy-drug.pharmacist_id")
+
+  @@map("pharmacy-drug")
+  @@ignore
 }
