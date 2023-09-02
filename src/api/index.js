@@ -16,7 +16,7 @@ import session from 'express-session'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
-import UserRoute from './routes/UserRoutes.js'
+import UserRoute from './routes/user.routes.js'
 
 const app = express()
 const { urlencoded } = pkg

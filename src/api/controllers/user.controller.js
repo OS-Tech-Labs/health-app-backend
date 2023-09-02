@@ -1,4 +1,4 @@
-import { getUserHash, comparePassword } from '../services/userService.js'
+import { getUserHash, comparePassword } from '../services/user.service.js'
 
 const login = async (req, res) => {
   const username = req.body.username
