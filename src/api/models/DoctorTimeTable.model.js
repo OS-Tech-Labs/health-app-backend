@@ -36,4 +36,4 @@ class TimeTable {
     
 }
 
-export default MedicalOfficer
+export default TimeTable

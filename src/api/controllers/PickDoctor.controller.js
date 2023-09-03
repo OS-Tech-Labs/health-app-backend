@@ -1,6 +1,7 @@
 
 import DoctorDetails from "../models/doctorDetails.model.js"
-  
+import MedicalOfficer from "../models/medicalOfficer.model.js"
+import TimeTable from "../models/DoctorTimeTable.model.js"
   
   
   const getDoctorDetails = async (req, res) => {
@@ -14,5 +15,16 @@ import DoctorDetails from "../models/doctorDetails.model.js"
     }
   }
   
-  export default { getDoctorDetails }
+  const getTimeTableByDoctorId = async (req, res) => {
+    const doctor_id = req.body.doctor_id
+    try {
+      const timeTable = await TimeTable.getTimeTableByDoctorId(doctor_id)
+      return res.send(timeTable)
+    } catch (err) {
+      console.log(err)
+      return res.send({ approved: false })
+    }
+  }
+  export default { getDoctorDetails,getTimeTableByDoctorId }
+  
   
