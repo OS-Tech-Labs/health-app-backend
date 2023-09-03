@@ -50,4 +50,6 @@ class DoctorDetails {
   }
 }
 
+
+
 export default DoctorDetails
