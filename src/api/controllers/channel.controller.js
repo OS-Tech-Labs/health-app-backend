@@ -1,45 +1,17 @@
-import {
-    comparePassword,
-    generateHash,
-  } from "../services/user.service.js"
+
 import DoctorDetails from "../models/doctorDetails.model.js"
   
-  const login = async (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
   
-    try {
-      const user = await User.getUserByUsername(username)
-  
-      if (user === null) {
-        console.log("User not found")
-        return res.send({ approved: false })
-      }
-      const hash = user.hash
-      const match = await comparePassword(password, hash)
-      console.log(username, password, hash)
-      if (match) {
-        console.log("Login successful")
-        return res.send({ approved: true })
-      } else {
-        console.log("Login failed")
-        return res.send({ approved: false })
-      }
-    } catch (err) {
-      console.log(err)
-      return res.send({ approved: false })
-    }
-  }
-  
-  const register = async (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
+  const createDoctorDetails = async (req, res) => {
+    const officer_id = req.body.officer_id
+    const first_name = req.body.first_name
+    const last_name = req.body.last_name
     const email = req.body.email
-    const type = req.body.type
+    const contact_number = req.body.contact_number
+    const specialization = req.body.specialization
   
-    const hash = await generateHash(password)
     try {
-      const user = await User.createUser(username, hash, type, email)
+      const doctorDetails = await DoctorDetails.createDoctorDetails(officer_id, first_name,last_name, email, contact_number,specialization)
     } catch (err) {
       console.log(err)
       return res.send({ approved: false })
@@ -47,6 +19,16 @@ import DoctorDetails from "../models/doctorDetails.model.js"
   
     console.log("Registration function")
   }
+
+  const getDoctorDetails = async (req, res) => {
+    try {
+      const doctorDetails = await DoctorDetails.getDoctorDetails()
+      return res.send(doctorDetails)
+    } catch (err) {
+      console.log(err)
+      return res.send({ approved: false })
+    }
+  }
   
-  export default { login, register }
+  export default { getDoctorDetails, createDoctorDetails }
   
