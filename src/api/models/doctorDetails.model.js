@@ -30,9 +30,10 @@ class DoctorDetails {
     )
   }
 
-  static async getDoctorDetails() {
+  static async getDoctorDetails(specialization) {
     const { rows } = await db.query(
-      'SELECT * FROM public."DoctorDetails"',
+      'SELECT * FROM public."DoctorDetails WHERE specialization = $1"',
+      [specialization]
       
     )
     const doctors = rows.map((doctor) => new DoctorDetails(

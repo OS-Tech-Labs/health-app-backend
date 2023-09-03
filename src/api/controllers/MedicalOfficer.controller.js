@@ -1,4 +1,4 @@
-
+import e from "express"
 import DoctorDetails from "../models/doctorDetails.model.js"
   
   
@@ -17,18 +17,6 @@ import DoctorDetails from "../models/doctorDetails.model.js"
       return res.send({ approved: false })
     }
   
-    console.log("Registration function")
+   
   }
-
-  const getDoctorDetails = async (req, res) => {
-    try {
-      const doctorDetails = await DoctorDetails.getDoctorDetails()
-      return res.send(doctorDetails)
-    } catch (err) {
-      console.log(err)
-      return res.send({ approved: false })
-    }
-  }
-  
-  export default { getDoctorDetails, createDoctorDetails }
-  
+  export default { createDoctorDetails }
