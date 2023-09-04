@@ -1,20 +1,22 @@
 // const db = require("./db") // Import your database configuration
 import db from "./db.js"
 class Booking {
-  constructor(booking_id,patient_id,doctor_id,description,date)
-    {
+  constructor(booking_id,patient_id,doctor_id,description,date,time) {
+    
         this.booking_id = booking_id
         this.patient_id = patient_id
         this.doctor_id = doctor_id
         this.description = description
         this.date = date
+        this.time = time
+
     }
 
    
-    static async createBooking(patient_id,doctor_id,description,date) {
+    static async createBooking(patient_id,doctor_id,description,date,time) {
         const { rows } = await db.query(
-            "INSERT INTO public.'Booking' (booking_id,patient_id,doctor_id,description,date) VALUES (DEFAULT, $1, $2, $3, $4);",
-            [patient_id,doctor_id,description,date]
+            "INSERT INTO public.'Booking' (booking_id,patient_id,doctor_id,description,date,time) VALUES (DEFAULT, $1, $2, $3, $4, $5);",
+            [patient_id,doctor_id,description,date,time]
         )
         const newBooking = rows[0]
         return new Booking(
@@ -22,7 +24,8 @@ class Booking {
             newBooking.patient_id,
             newBooking.doctor_id,
             newBooking.description,
-            newBooking.date
+            newBooking.date,
+            newBooking.time
         )
         }
     
@@ -37,7 +40,8 @@ class Booking {
             booking.patient_id,
             booking.doctor_id,
             booking.description,
-            booking.date
+            booking.date,
+            booking.time
         )
     }
     static async getBookingByDoctorId(doctor_id) {
@@ -51,7 +55,8 @@ class Booking {
             booking.patient_id,
             booking.doctor_id,
             booking.description,
-            booking.date
+            booking.date,
+            booking.time
         )
     }
 
@@ -59,4 +64,4 @@ class Booking {
     
 }
 
-export default MedicalOfficer
+export default Booking

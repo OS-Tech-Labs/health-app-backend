@@ -26,5 +26,7 @@ import TimeTable from "../models/DoctorTimeTable.model.js"
     }
   }
   export default { getDoctorDetails,getTimeTableByDoctorId }
+
   
+
   
