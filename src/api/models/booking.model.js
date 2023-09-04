@@ -26,19 +26,35 @@ class Booking {
         )
         }
     
-    static async getMedicalOffcerByUserId(user_id) {
+    static async getBookingByPatientId(patient_id) {
         const { rows } = await db.query(
-            'SELECT * FROM public."MedicalOfficer" WHERE user_id = $1',
-            [user_id]
+            'SELECT * FROM public."Booking" WHERE patient_id = $1',
+            [patient_id]
         )
-        const medicalOfficer = rows[0]
-        return new MedicalOfficer(
-            medicalOfficer.user_id,
-            medicalOfficer.officer_id
+        const booking = rows[0]
+        return new Booking(
+            booking.booking_id,
+            booking.patient_id,
+            booking.doctor_id,
+            booking.description,
+            booking.date
+        )
+    }
+    static async getBookingByDoctorId(doctor_id) {
+        const { rows } = await db.query(
+            'SELECT * FROM public."Booking" WHERE doctor_id = $1',
+            [doctor_id]
+        )
+        const booking = rows[0]
+        return new Booking(
+            booking.booking_id,
+            booking.patient_id,
+            booking.doctor_id,
+            booking.description,
+            booking.date
         )
     }
 
-  
     
     
 }
