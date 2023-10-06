@@ -34,6 +34,7 @@
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "nodemon": "^2.0.22",
+    "openai": "^4.10.0",
     "path": "^0.12.7",
     "pg": "^8.11.3",
     "prisma": "^4.12.0",

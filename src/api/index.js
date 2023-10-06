@@ -1,13 +1,3 @@
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
-
-// client.query('SELECT t.* FROM public."User" t LIMIT 501', (err, res) => {
-//   if (!err) {
-//     console.log(res.rows)
-//     console.log('hi')
-//   } else {
-//     console.log(err.message)
-//   }
-// })
 
 import express, { json } from "express"
 import pkg from "body-parser"
@@ -16,6 +6,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 
 import UserRoute from "./routes/user.routes.js"
+import ChatRoute from "./routes/chat.routes.js"
 
 const app = express()
 const { urlencoded } = pkg
@@ -34,3 +25,4 @@ app.use(cookieParser())
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
 // Route for index
 app.use("/user", UserRoute)
+app.use("/chat", ChatRoute)
