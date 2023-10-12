@@ -5,9 +5,9 @@ import userController from "../controllers/user.controller.js"
 const { login, register } = userController
 const router = express.Router()
 
-router.get("/")
+// router.get("/")
 router.post("/login", login)
-router.post("/register", register)
+router.post("/", register)
 
 // module.exports = router
 

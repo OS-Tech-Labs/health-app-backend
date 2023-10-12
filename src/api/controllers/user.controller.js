@@ -1,51 +1,29 @@
-import {
-  comparePassword,
-  generateHash,
-} from "../services/user.service.js"
-import  User  from "../models/user.model.js"
+import User from "../models/user.model.js"
 
 const login = async (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
+  const { email, password } = req.body
 
   try {
-    const user = await User.getUserByUsername(username)
-
-    if (user === null) {
-      console.log("User not found")
-      return res.send({ approved: false })
-    }
-    const hash = user.hash
-    const match = await comparePassword(password, hash)
-    console.log(username, password, hash)
-    if (match) {
-      console.log("Login successful")
-      return res.send({ approved: true })
-    } else {
-      console.log("Login failed")
-      return res.send({ approved: false })
-    }
-  } catch (err) {
-    console.log(err)
-    return res.send({ approved: false })
+    const user = await User.findOne({ email })
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching data" })
   }
 }
 
 const register = async (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
-  const email = req.body.email
-  const type = req.body.type
+  const { name, email, password } = req.body
+  const user = new User({ name, email, password })
 
-  const hash = await generateHash(password)
-  try {
-    const user = await User.createUser(username, hash, type, email)
-  } catch (err) {
-    console.log(err)
-    return res.send({ approved: false })
-  }
-
-  console.log("Registration function")
+  user
+    .save()
+    .then((savedUser) => {
+      res.status(201).json(savedUser)
+      console.log(savedUser) // Return the saved user data
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Error saving user" })
+    })
 }
 
 export default { login, register }

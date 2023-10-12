@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/api/index",
-    "devStart": "ts-node --esm script.ts",
+    "devStart": "nodemon src/api/index",
     "dev": "nodemon src/api/index"
   },
   "repository": {
@@ -33,6 +33,8 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.6.0",
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
     "pg": "^8.11.3",

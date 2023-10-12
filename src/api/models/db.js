@@ -1,18 +1,15 @@
-import pkg from "pg"
-import dotenv from "dotenv"
+import mongoose from "mongoose"
 
-const { Pool } = pkg
-dotenv.config()
+mongoose.connect(
+  "mongodb+srv://samith:rmskk113@cluster0.hrgqraa.mongodb.net/health_app?retryWrites=true&w=majority"
+)
 
-const db = new Pool({
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  ssl: {
-    rejectUnauthorized: false, // Insecure option, use cautiously
-  },
+
+const db = mongoose.connection
+
+db.on("error", console.error.bind(console, "connection error:"))
+db.once("open", function () {
+  console.log("Database Connected")
 })
 
-export default db
+export { mongoose, db }
